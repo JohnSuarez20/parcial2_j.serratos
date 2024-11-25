@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
-import { DiagnosticoEntity } from 'src/diagnostico/diagnostico.entity/diagnostico.entity';
-import { MedicoEntity } from 'src/medico/medico.entity/medico.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from 'typeorm';
+import { DiagnosticoEntity } from '../../diagnostico/diagnostico.entity/diagnostico.entity';
+import { MedicoEntity } from '../../medico/medico.entity/medico.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable } from 'typeorm';
 
 @Entity()
 export class PacienteEntity {
@@ -14,8 +14,9 @@ export class PacienteEntity {
   @Column({ type: 'varchar', length: 50 })
   genero: string;
 
-  @ManyToOne(() => MedicoEntity, (medico) => medico.pacientes)
-  medico: MedicoEntity;
+  @ManyToMany(() => MedicoEntity, (medico) => medico.pacientes)
+  @JoinTable()
+  medicos: MedicoEntity[];
 
   @OneToMany(() => DiagnosticoEntity, (diagnostico) => diagnostico.paciente)
   diagnosticos: DiagnosticoEntity[];

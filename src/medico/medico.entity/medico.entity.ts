@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { PacienteEntity } from 'src/paciente/paciente.entity/paciente.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-
+import { PacienteEntity } from '../../paciente/paciente.entity/paciente.entity';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
 
 @Entity()
 export class MedicoEntity {
@@ -17,6 +16,7 @@ export class MedicoEntity {
   @Column({ type: 'varchar', length: 15 })
   telefono: string;
 
-  @OneToMany(() => PacienteEntity, (paciente) => paciente.medico)
+  @ManyToMany(() => PacienteEntity, (paciente) => paciente.medicos)
+  @JoinTable()
   pacientes: PacienteEntity[];
 }
